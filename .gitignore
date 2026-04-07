@@ -1,0 +1,18 @@
+# Data
+*.csv
+*.bz2
+*.parquet
+
+# Generated folders
+window_shards/
+window_tables/
+window_temporal/
+window_labels/
+training_runs*/
+
+# Python
+__pycache__/
+*.pyc
+*.csv
+*.bz2
+*.parquet
