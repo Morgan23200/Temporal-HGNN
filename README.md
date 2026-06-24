@@ -1,6 +1,7 @@
 # Temporal-HGNN: Cross-Region Trending Prediction
 
 ## Overview
+
 This project investigates cross-country trending video prediction using a **Temporal Heterogeneous Hypergraph Neural Network (HGNN)**.
 
 Nodes:(video_id, country, window)
@@ -44,7 +45,7 @@ The goal is to predict **which countries a video will trend in during the next t
 6. **Temporal Hypergraph Construction**
    - `6_build_temp_hypergraph.py`
    - Add temporal edges between windows
-     
+
 7. **Model Definitions**
    - `models_temp_7.py`
    - Contains all model architectures:
@@ -65,7 +66,7 @@ The goal is to predict **which countries a video will trend in during the next t
 We evaluate five model variants:
 
 | Model | Description |
-|------|--------|
+|-------|-------------|
 | **MLP Only** | Baseline using tabular features only |
 | **Static Category HGNN** | Hypergraph using category relation only |
 | **Static Heterogeneous HGNN** | Multi-relation (video + country + category) |
@@ -76,31 +77,31 @@ We evaluate five model variants:
 
 ## Results
 
-Evaluation metric: **Recall@3 (primary)**
+Evaluation metrics: **NDCG@5 (primary)**, Hit@1, Hit@5, NDCG@1, NDCG@10, F1, Loss  
+All experiments run on N = 109,033 samples.
 
-|        Model                    | Recall@3   | Hit@3      | F1_micro   | Loss   |
-|---------------------------------|------------|------------|------------|--------|
-| **Temporal Heterogeneous HGNN** | **0.1386** | **0.2099** | **0.0821** | 1.1864 |
-| Static Heterogeneous HGNN       | 0.1024     | 0.1823     | 0.0461     | 1.3754 |
-| Temporal Category HGNN          | 0.0994     | 0.1255     | 0.0452     | 2.0037 |
-| MLP Baseline                    | 0.0955     | 0.1493     | 0.0508     | 1.3474 |
-| Static Category HGNN            | 0.0376     | 0.0868     | 0.0309     | 1.4307 |
+| Model | Hit@1 | Hit@5 | NDCG@1 | NDCG@5 | NDCG@10 | F1 | Loss |
+|-------|-------|-------|--------|--------|---------|-----|------|
+| **Static Heterogeneous HGNN** | **0.1003** | **0.2848** | **0.1003** | **0.1773** | **0.2219** | **0.0665** | **0.9756** |
+| Temporal Heterogeneous HGNN | 0.0999 | 0.2853 | 0.0999 | 0.1619 | 0.1852 | 0.0612 | 1.0927 |
+| MLP Baseline | 0.0620 | 0.2147 | 0.0620 | 0.1116 | 0.1505 | 0.0519 | 1.2873 |
+| Temporal Category HGNN | 0.0446 | 0.1959 | 0.0446 | 0.1014 | 0.1436 | 0.0461 | 1.7888 |
+| Static Category HGNN | 0.0366 | 0.1286 | 0.0366 | 0.0503 | 0.0629 | 0.0308 | 1.4307 |
 
 ---
 
 ## Key Findings
 
-- **Temporal modeling improves performance**
-  - Temporal HGNN > Static HGNN
-
 - **Heterogeneous relations are critical**
-  - Multi-relation (video + country + category) significantly outperforms single-relation models
-
-- **Best model: Temporal Heterogeneous HGNN**
-  - Achieves highest Recall@3 and Hit@3
-
-- **MLP baseline is competitive but limited**
-  - Lacks relational and temporal structure
+  - Multi-relation models (video + country + category) consistently outperform single-relation (category-only) models
+- **Best model by NDCG@5: Static Heterogeneous HGNN**
+  - Achieves highest NDCG@5 (0.1773), NDCG@10 (0.2219), F1 (0.0665), and lowest loss (0.9756)
+- **Temporal edges do not consistently improve performance**
+  - Temporal Heterogeneous HGNN is competitive on Hit@5 (0.2853 vs 0.2848) but slightly underperforms on NDCG@5 and loss — suggesting the temporal aggregation mechanism may require further tuning
+- **MLP baseline is surprisingly strong**
+  - Outperforms both category-only HGNN variants on NDCG@5 and Hit@5, indicating tabular features carry substantial signal
+- **Category-only hypergraphs underperform**
+  - Both static and temporal category variants score lowest, confirming that cross-video and cross-country edges are necessary
 
 ---
 
@@ -114,3 +115,4 @@ python 4_build_labels.py
 python 5_build_hyper_snapshot.py
 python 6_build_temp_hypergraph.py
 python 8_train_models.py
+```
