@@ -94,7 +94,7 @@ All experiments run on N = 109,033 samples.
 
 - **Heterogeneous relations are critical**
   - Multi-relation models (video + country + category) consistently outperform single-relation (category-only) models
-- **Best model by NDCG@5: Static Heterogeneous HGNN**
+- **Best model by NDCG@5: Temporal Heterogeneous HGNN**
   - Achieves highest NDCG@5 (0.1773), NDCG@10 (0.2219), F1 (0.0665), and lowest loss (0.9756)
 - **Temporal edges do not consistently improve performance**
   - Temporal Heterogeneous HGNN is competitive on Hit@5 (0.2853 vs 0.2848) but slightly underperforms on NDCG@5 and loss — suggesting the temporal aggregation mechanism may require further tuning
