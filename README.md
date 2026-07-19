@@ -196,3 +196,62 @@ python models_temp_7.py
 python 8_train_models.py
 python 9_cross_region.py
 ```
+
+#Experiment Result: 
+================================================================================
+Using model weights: best_cross_region_model.pt
+Using snapshot: cross_region_snapshot_00056.pt
+
+Window index: 56
+Current window date range: 2023-07-28 to 2023-08-03
+
+Cross-region propagation enabled
+Device: cpu
+Source-country filter: US
+================================================================================
+
+video_id: uB8cPQiNDok
+
+current countries at t:
+['AR','AT','AU','BO','BR','CA','CL','CO','CR','DE','DO',
+ 'EC','ES','GB','GT','HN','IT','MX','PA','PE','PR','US','UY']
+
+predicted next countries at t+1 (top-10):
+['CA','US','GB','AU','AT','DE','ES','MX','AR','BR']
+
+true next countries at t+1:
+['AR','AT','AU','BO','BR','CA','CL','CO','CR','DE',
+ 'DO','EC','ES','GB','GT','HN','IT','MX','PA','PE','PR','US','UY']
+
+Top-10 probabilities
+
+ 1. [✓] CA   prob=0.9938
+ 2. [✓] US   prob=0.9927
+ 3. [✓] GB   prob=0.9914
+ 4. [✓] AU   prob=0.9895
+ 5. [✓] AT   prob=0.9888
+ 6. [✓] DE   prob=0.9881
+ 7. [✓] ES   prob=0.9849
+ 8. [✓] MX   prob=0.9833
+ 9. [✓] AR   prob=0.9814
+10. [✓] BR   prob=0.9798
+
+Interpretation
+
+persistent predicted:
+['AR','AT','AU','BR','CA','DE','ES','GB','MX','US']
+
+predicted new regions:
+[]
+
+predicted drop regions:
+['BO','CL','CO','CR','DO','EC','GT','HN','IT','PA','PE','PR','UY']
+
+Validation metrics
+
+n_true_labels = 23
+
+@1   Hit=1.0000  P=1.0000  R=0.0435  NDCG=1.0000
+@3   Hit=1.0000  P=1.0000  R=0.1304  NDCG=1.0000
+@5   Hit=1.0000  P=1.0000  R=0.2174  NDCG=1.0000
+@10  Hit=1.0000  P=1.0000  R=0.4348  NDCG=1.0000
