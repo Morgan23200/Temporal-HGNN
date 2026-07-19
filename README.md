@@ -74,7 +74,7 @@ We evaluate five model variants:
 | **Temporal Heterogeneous HGNN** | Full model (multi-relation + temporal) |
 
 ---
-
+| **0.1003** | **0.2848** | **0.1003** | **0.1773** | **0.2219** | **0.0665** | **0.9756** |
 ## Results
 
 Evaluation metrics: **NDCG@5 (primary)**, Hit@1, Hit@5, NDCG@1, NDCG@10, F1, Loss  
@@ -82,8 +82,8 @@ All experiments run on N = 109,033 samples.
 
 | Model | Hit@1 | Hit@5 | NDCG@1 | NDCG@5 | NDCG@10 | F1 | Loss |
 |-------|-------|-------|--------|--------|---------|-----|------|
-| **Static Heterogeneous HGNN** | **0.1003** | **0.2848** | **0.1003** | **0.1773** | **0.2219** | **0.0665** | **0.9756** |
-| Temporal Heterogeneous HGNN | 0.0999 | 0.2853 | 0.0999 | 0.1619 | 0.1852 | 0.0612 | 1.0927 |
+| Static Heterogeneous HGNN | 0.0999 | 0.2853 | 0.0999 | 0.1619 | 0.1852 | 0.0612 | 1.0927 |
+|**Temporal Heterogeneous HGNN** | **0.1003** | **0.2848** | **0.1003** | **0.1773** | **0.2219** | **0.0665** | **0.9756** |
 | MLP Baseline | 0.0620 | 0.2147 | 0.0620 | 0.1116 | 0.1505 | 0.0519 | 1.2873 |
 | Temporal Category HGNN | 0.0446 | 0.1959 | 0.0446 | 0.1014 | 0.1436 | 0.0461 | 1.7888 |
 | Static Category HGNN | 0.0366 | 0.1286 | 0.0366 | 0.0503 | 0.0629 | 0.0308 | 1.4307 |
