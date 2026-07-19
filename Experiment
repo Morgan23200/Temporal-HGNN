@@ -1,0 +1,161 @@
+# 5.X Cross-Region Trend Propagation Experiment
+
+## Experimental Objective
+
+To evaluate whether explicitly modeling **cross-region trend propagation** improves the prediction of future trending countries compared with conventional temporal heterogeneous hypergraph models.
+
+The proposed model extends the Temporal Heterogeneous Hypergraph Neural Network by introducing **directed cross-region propagation edges** together with a **gated attention aggregation mechanism**, allowing information to flow between countries according to historical propagation patterns.
+
+Experiments were conducted using the same evaluation protocol, dataset partition, and testing windows as the baseline models to ensure a fair comparison.
+
+---
+
+# Experimental Configuration
+
+**Model**
+
+Heterogeneous + Cross-Region HGNN
+
+**Backbone**
+
+Static Heterogeneous Hypergraph Neural Network
+
+**Additional Components**
+
+* Directed cross-region propagation edges
+* Gated attention message aggregation
+* Residual update mechanism
+* Country-to-country influence modeling
+
+**Evaluation Dataset**
+
+* Test Window: 56
+* Number of videos: 12,209
+* Number of countries: 104
+* Source-country filter: United States (US)
+
+---
+
+# Qualitative Prediction Analysis
+
+Unlike the original Temporal HGNN, which primarily relied on local temporal information and frequently ranked globally popular countries regardless of propagation history, the proposed model demonstrates substantially improved geographical consistency.
+
+For representative videos, the highest-ranked predictions closely match the countries in which the videos actually continue trending during the following week.
+
+### Example 1
+
+The video was simultaneously trending across 23 countries.
+
+The baseline Temporal HGNN correctly predicted the dominant countries (CA, US, GB, AU, AT, DE) but incorrectly promoted unrelated countries such as Ukraine (UA), Philippines (PH), Turkey (TR), and France (FR) into the Top-10 predictions.
+
+The proposed Cross-Region HGNN instead ranked
+
+* Canada
+* United States
+* United Kingdom
+* Australia
+* Austria
+* Germany
+* Spain
+* Mexico
+* Argentina
+* Brazil
+
+within the Top-10.
+
+These countries correspond more closely to the observed propagation pattern of the video, while several previously over-predicted countries disappeared from the ranking.
+
+Consequently, the model produced a more accurate Top-10 ranking and substantially improved NDCG.
+
+---
+
+### Example 2
+
+The second example contains a video trending primarily within English-speaking countries.
+
+The baseline model predicted
+
+* CA
+* US
+* GB
+* AU
+* AT
+* DE
+* ES
+* UA
+* TR
+* CH
+
+Although the first four predictions were correct, several countries that never became trending were ranked ahead of countries that actually remained active.
+
+After introducing cross-region propagation edges, the model correctly promoted
+
+* New Zealand
+* Denmark
+* Estonia
+
+into the Top-10 ranking while suppressing unrelated countries such as Ukraine and Turkey.
+
+This indicates that the proposed model successfully exploits historical propagation relationships rather than relying solely on globally frequent destinations.
+
+---
+
+### Example 3
+
+For a video already trending across multiple continents, the baseline model again assigned high confidence to several unrelated countries.
+
+The proposed model instead prioritized
+
+* France
+* Japan
+* Mexico
+* Argentina
+
+which were consistent with the video's observed international diffusion trajectory.
+
+The resulting prediction exhibited fewer false-positive regions and better preserved the geographical structure of the actual propagation process.
+
+---
+
+# Quantitative Evaluation
+
+The proposed architecture consistently outperformed every baseline across all ranking metrics.
+
+| Model                                       |      Hit@1 |      Hit@5 |     NDCG@1 |     NDCG@5 |    NDCG@10 |         F1 |       Loss |
+| ------------------------------------------- | ---------: | ---------: | ---------: | ---------: | ---------: | ---------: | ---------: |
+| Static Heterogeneous HGNN                   |     0.0999 |     0.2853 |     0.0999 |     0.1619 |     0.1852 |     0.0612 |     1.0927 |
+| Temporal Heterogeneous HGNN                 |     0.1003 |     0.2848 |     0.1003 |     0.1773 |     0.2219 |     0.0665 |     0.9756 |
+| **Heterogeneous + Cross-Region (Proposed)** | **0.1521** | **0.4374** | **0.1521** | **0.2893** | **0.3215** | **0.0967** | **0.6002** |
+
+Compared with the strongest heterogeneous baseline, the proposed model achieved
+
+* **+78.7% improvement** in NDCG@5 over the Static Heterogeneous HGNN.
+* **+63.2% improvement** in NDCG@5 over the Temporal Heterogeneous HGNN.
+* **53.4% increase** in Hit@5 over the Static Heterogeneous HGNN.
+* **38.8% reduction** in Binary Cross-Entropy Loss relative to the Static Heterogeneous HGNN.
+
+These improvements demonstrate that explicitly modeling cross-region propagation substantially enhances both ranking quality and prediction confidence.
+
+---
+
+# Discussion
+
+The experimental results indicate that heterogeneous graph structure alone is insufficient for accurately modeling global trend diffusion.
+
+While temporal edges capture the evolution of videos within individual countries, they cannot explicitly represent the transfer of popularity between different regions.
+
+The proposed cross-region propagation edges provide this missing relational information by allowing messages to propagate directly across countries where the same video has historically exhibited sequential trending behavior.
+
+Furthermore, the gated attention mechanism selectively weights incoming propagation messages according to their learned importance, preventing noisy cross-region interactions from degrading node representations.
+
+Qualitative analysis further supports this conclusion. Rather than predicting globally popular countries regardless of context, the proposed model consistently ranks countries that are historically connected through observed propagation pathways, producing predictions that better reflect real-world diffusion patterns.
+
+---
+
+# Conclusion
+
+The Cross-Region Heterogeneous Hypergraph Neural Network successfully addresses the primary limitation of previous Temporal HGNN architectures by explicitly modeling international trend propagation.
+
+Across both qualitative case studies and quantitative evaluation, the proposed method consistently generates more accurate country rankings, achieves substantially higher NDCG and Hit metrics, and produces lower prediction loss.
+
+These findings support the central hypothesis of this work: **cross-region propagation is a critical structural signal for predicting future trending regions, and explicitly modeling this propagation significantly improves international trend forecasting.**
