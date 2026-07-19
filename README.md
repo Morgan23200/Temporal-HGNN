@@ -247,11 +247,3 @@ predicted new regions:
 predicted drop regions:
 ['BO','CL','CO','CR','DO','EC','GT','HN','IT','PA','PE','PR','UY']
 
-Validation metrics
-
-n_true_labels = 23
-
-@1   Hit=1.0000  P=1.0000  R=0.0435  NDCG=1.0000
-@3   Hit=1.0000  P=1.0000  R=0.1304  NDCG=1.0000
-@5   Hit=1.0000  P=1.0000  R=0.2174  NDCG=1.0000
-@10  Hit=1.0000  P=1.0000  R=0.4348  NDCG=1.0000
